@@ -1,0 +1,21 @@
+{
+  "name": "html-parse-regex",
+  "version": "0.4.0",
+  "description": "html parser module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "parse", "html", "xml"
+  ],
+  "author": "NPM html-parser <heyderpd@gmail.com> (http://heyderpd.github.io)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heyderpd/html-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/heyderpd/html-parser/issues"
+  },
+  "license": "ISC"
+}
