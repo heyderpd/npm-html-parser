@@ -24,5 +24,5 @@ import fs from 'fs';
 import { parse } from 'html-parse-regex';
 
 const htmlRaw = fs.readFileSync(`index.html`, 'utf8');
-const html = parse(html);
+const html = parse(htmlRaw);
 ```
