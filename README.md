@@ -6,6 +6,17 @@ Each node have:
     all params tag parsed to a js object
     link to inner tags
 
+##First Steps
+* install node 6
+* touch .babelrc
+and write in:
+```javascript
+{
+  "presets": ["es2015"]
+}
+```
+* npm install html-parse-regex
+
 ##To create tree from raw html/xml
 Example:
 ```javascript
