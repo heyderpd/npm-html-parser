@@ -1,4 +1,10 @@
 
+/*!
+ * html-parse-regex
+ * Copyright (c) 2016 heyderpd <heyderpd@gmail.com>
+ * ISC Licensed
+ */
+
 function parseData(Text, startPoint = 0, R = 0) {
   if (!Text)
     return ''
