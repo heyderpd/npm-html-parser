@@ -6,6 +6,13 @@ Each node have:
 * all params tag parsed to a js object
 * link to inner tags
 
+## First Steps NO MORE!
+Now is is in es2015, don't need first steps!
+Thanks for:
+[npm~lucasmreis](https://www.npmjs.com/~lucasmreis)
+
+npm install npm install html-parse-regex
+
 ## Example:
 ### HTML
 ```html
@@ -51,17 +58,6 @@ html { ...
  params : {id:"A", align:"left", style:"margin-top:15px;"}
 }
 ```
-
-##First Steps
-* install node 6
-* touch .babelrc
-and write in:
-```javascript
-{
-  "presets": ["es2015"]
-}
-```
-* npm install html-parse-regex
 
 ##To create tree from raw html/xml
 Example:

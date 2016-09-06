@@ -4,10 +4,12 @@
   "description": "html parser module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "transpile": "babel js/ -d dist/"
   },
   "keywords": [
-    "parse", "html", "xml"
+    "parse",
+    "html",
+    "xml"
   ],
   "author": "NPM html-parse-regex <heyderpd@gmail.com> (http://heyderpd.github.io)",
   "repository": {
@@ -17,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/heyderpd/npm-html-parser/issues"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.14.0"
+  }
 }
