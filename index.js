@@ -1,1 +1,1 @@
-module.exports = require('./js/html-parse-regex');
+module.exports = require('./dist/html-parse-regex');

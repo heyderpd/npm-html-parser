@@ -39,7 +39,7 @@ function parseData(Text) {
     inner.push(Math);
     // create inner node's
     Math.inner = parseData(innerHtml, refPoint, R);
-    if (_typeof(Math.inner) === 'object') doEach(Math.inner, function (nodo) {
+    if (_typeof(Math.inner) === 'object') eachVal(Math.inner, function (nodo) {
       if (nodo) {
         Math.link.down.push(nodo);
         nodo.link.up.push(Math);
@@ -99,15 +99,10 @@ function getResume() {
   /*   */
 }
 
-var doEach = function doEach(obj, func) {
-  return Object.keys(obj).forEach(function (n) {
-    return func(obj[n], n);
-  });
-};
-var Copy = function Copy(Obj) {
-  var base = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-  return Object.assign(base, Obj);
-};
+var _require = require('pytils');
+
+var eachVal = _require.eachVal;
+
 
 var tagParse = "(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)";
 var paramParse = "(?:([^ ?=]+))(?:=([\"])((?:\\\\\\2|.)+?)(?:\\2))?";

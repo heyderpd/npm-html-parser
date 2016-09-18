@@ -7,7 +7,7 @@ Each node have:
 * link to inner tags
 
 ## First Steps NO MORE!
-Now is is in es2015, don't need first steps!
+Now use es2015, don't need first steps!
 Thanks for:
 [npm~lucasmreis](https://www.npmjs.com/~lucasmreis)
 

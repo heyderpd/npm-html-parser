@@ -36,7 +36,7 @@ function parseData(Text, startPoint = 0, R = 0) {
     // create inner node's
     Math.inner = parseData(innerHtml, refPoint, R)
     if (typeof(Math.inner) === 'object')
-      doEach(Math.inner, nodo => {
+      eachVal(Math.inner, nodo => {
         if (nodo) {
           Math.link.down.push(nodo)
           nodo.link.up.push(Math)
@@ -89,8 +89,7 @@ function getResume() {
   /*   */
 }
 
-const doEach = (obj, func) => Object.keys(obj).forEach(n => func(obj[n], n))
-const Copy = (Obj, base = {}) => Object.assign(base, Obj)
+const { eachVal } = require('pytils')
 
 const tagParse = "(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)"
 const paramParse = "(?:([^ ?=]+))(?:=([\"])((?:\\\\\\2|.)+?)(?:\\2))?"
