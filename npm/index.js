@@ -1,6 +1,6 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /*!
  * html-parse-regex
@@ -9,8 +9,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  */
 
 function parseData(Text) {
-  var startPoint = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-  var R = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+  var startPoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var R = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
   if (!Text) return '';
   if (typeof Text !== 'string') throw "Try Parse Object as a String";

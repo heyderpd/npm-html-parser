@@ -1,0 +1,25 @@
+{
+  "license": "MIT",
+  "name": "html-parse-regex",
+  "version": "0.5.1",
+  "description": "html parser module",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "parse",
+    "html",
+    "xml"
+  ],
+  "author": "NPM html-parse-regex <heyderpd@gmail.com> (http://heyderpd.github.io)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heyderpd/npm-html-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/heyderpd/npm-html-parser/issues"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "pytils": "^0.16.2"
+  }
+}
