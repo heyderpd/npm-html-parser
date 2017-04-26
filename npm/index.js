@@ -99,12 +99,10 @@ function getResume() {
   /*   */
 }
 
-var _require = require('pytils');
+var _require = require('pytils'),
+    eachVal = _require.eachVal;
 
-var eachVal = _require.eachVal;
-
-
-var tagParse = "(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)";
+var tagParse = "(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)\n?";
 var paramParse = "(?:([^ ?=]+))(?:=([\"])((?:\\\\\\2|.)+?)(?:\\2))?";
 
 var data = { ready: false };
