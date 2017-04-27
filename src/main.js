@@ -5,7 +5,7 @@
  * ISC Licensed
  */
 
-const createMatch = (startPoint, result, Pattern) => ({
+const createMatch = (tag, startPoint, result, Pattern) => ({
       tag: tag,
     link: { up: [], down: [], out: [], in: [] },
   string: {
@@ -38,7 +38,7 @@ const parseData = (data, startPoint = 0, R = 0) => {
   while ((result = Pattern.exec(data)) !== null) {
     const { tag, params, innerHtml } = getGroups(result)
     // push to data.Objs
-    const Match = createMatch(startPoint, result, Pattern)
+    const Match = createMatch(tag, startPoint, result, Pattern)
     const refPoint = Match.string.start +1 +(typeof(result[1]) === 'string' ? result[1].length : 0)
     // push to data.List
     data.List.push(Match)

@@ -8,7 +8,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * ISC Licensed
  */
 
-var createMatch = function createMatch(startPoint, result, Pattern) {
+var createMatch = function createMatch(tag, startPoint, result, Pattern) {
   return {
     tag: tag,
     link: { up: [], down: [], out: [], in: [] },
@@ -53,7 +53,7 @@ var parseData = function parseData(data) {
     // push to data.Objs
 
 
-    var Match = createMatch(startPoint, result, Pattern);
+    var Match = createMatch(tag, startPoint, result, Pattern);
     var refPoint = Match.string.start + 1 + (typeof result[1] === 'string' ? result[1].length : 0);
     // push to data.List
     data.List.push(Match);
