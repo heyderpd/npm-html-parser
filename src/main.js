@@ -5,60 +5,72 @@
  * ISC Licensed
  */
 
-function parseData(Text, startPoint = 0, R = 0) {
-  if (!Text)
+const createMatch = (startPoint, result, Pattern) => ({
+      tag: tag,
+    link: { up: [], down: [], out: [], in: [] },
+  string: {
+      start: startPoint +result.index,
+        end: startPoint +Pattern.lastIndex
+      }
+  })
+
+const getGroups = (result) => ({
+  tag:       result[2] !== undefined ? result[2] : null,
+  params:    result[3] !== undefined ? result[3] : null,
+  innerHtml: result[4]
+})
+
+const parseData = (data, startPoint = 0, R = 0) => {
+  if (!data) {
     return ''
-  if (typeof(Text) !== 'string')
+  }
+  if (typeof(data) !== 'string') {
     throw "Try Parse Object as a String"
-  if (R++ > 42)
+  }
+  if (R++ > 42) {
     throw "Limit recursive exceeded in f.parseData"
+  }
 
   const Pattern = new RegExp(tagParse, "gim")
-  let inner = []
+  const inner = []
   let result = null
-  while ((result = Pattern.exec(Text)) !== null) {
-    const tag = result[2] === undefined ? null : result[2]
-    const params = result[3] === undefined ? null : result[3]
-    const innerHtml = result[4]
+
+  while ((result = Pattern.exec(data)) !== null) {
+    const { tag, params, innerHtml } = getGroups(result)
     // push to data.Objs
-    let Math = {
-       tag: tag,
-      link: { up: [], down: [], out: [], in: [] },
-    string: {
-        start: startPoint +result.index,
-          end: startPoint +Pattern.lastIndex
-        }
-    }
-    const refPoint = Math.string.start +1 +(typeof(result[1]) === 'string' ? result[1].length : 0)
+    const Match = createMatch(startPoint, result, Pattern)
+    const refPoint = Match.string.start +1 +(typeof(result[1]) === 'string' ? result[1].length : 0)
     // push to data.List
-    data.List.push(Math)
-    inner.push(Math)
+    data.List.push(Match)
+    inner.push(Match)
     // create inner node's
-    Math.inner = parseData(innerHtml, refPoint, R)
-    if (typeof(Math.inner) === 'object')
-      eachVal(Math.inner, nodo => {
+    Match.inner = parseData(innerHtml, refPoint, R)
+    // link node's
+    if (typeof(Match.inner) === 'object')
+      map(nodo => {
         if (nodo) {
-          Math.link.down.push(nodo)
-          nodo.link.up.push(Math)
+          Match.link.down.push(nodo)
+          nodo.link.up.push(Match)
         }
-      })
+      }, Match.inner)
     // create params
-    Math.params = getTagParams(params)
+    Match.params = getTagParams(params)
     // push to data.ids
-    if (Math.params.id)
-      data.map.id[Math.params.id] = Math
+    if (Match.params.id) {
+      data.map.id[Match.params.id] = Match
+    }
   }
   if (inner.length)
     return inner
   else
-    return Text
+    return data
 }
 
-function getTagParams(Text) {
+const getTagParams = (text) => {
   const Pattern = new RegExp(paramParse, "gim")
-  let params = {}
+  const params = {}
   let result = null
-  while ((result = Pattern.exec(Text)) !== null) {
+  while ((result = Pattern.exec(text)) !== null) {
     const key = result[1]
     const value = result[3]
     if (key) params[key.toLowerCase()] = value ? value.toLowerCase() : undefined
@@ -66,7 +78,7 @@ function getTagParams(Text) {
   return params
 }
 
-function main(html) {
+const main = (html) => {
   // verify input
   if (html === undefined) { throw 'param "html" is undefined' }
   // initialize
@@ -89,7 +101,7 @@ function getResume() {
   /*   */
 }
 
-const { eachVal } = require('pytils')
+const { map } = require('pytils')
 
 const tagParse = "(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)\n?"
 const paramParse = "(?:([^ ?=]+))(?:=([\"])((?:\\\\\\2|.)+?)(?:\\2))?"

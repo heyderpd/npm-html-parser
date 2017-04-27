@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "name": "html-parse-regex",
-  "version": "0.5.2",
+  "version": "0.6.2",
   "description": "html parser module",
   "main": "index.js",
   "scripts": {},
@@ -20,6 +20,6 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "pytils": "^0.16.2"
+    "pytils": "^1.19.5"
   }
 }

@@ -8,68 +8,92 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * ISC Licensed
  */
 
-function parseData(Text) {
+var createMatch = function createMatch(startPoint, result, Pattern) {
+  return {
+    tag: tag,
+    link: { up: [], down: [], out: [], in: [] },
+    string: {
+      start: startPoint + result.index,
+      end: startPoint + Pattern.lastIndex
+    }
+  };
+};
+
+var getGroups = function getGroups(result) {
+  return {
+    tag: result[2] !== undefined ? result[2] : null,
+    params: result[3] !== undefined ? result[3] : null,
+    innerHtml: result[4]
+  };
+};
+
+var parseData = function parseData(data) {
   var startPoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var R = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-  if (!Text) return '';
-  if (typeof Text !== 'string') throw "Try Parse Object as a String";
-  if (R++ > 42) throw "Limit recursive exceeded in f.parseData";
+  if (!data) {
+    return '';
+  }
+  if (typeof data !== 'string') {
+    throw "Try Parse Object as a String";
+  }
+  if (R++ > 42) {
+    throw "Limit recursive exceeded in f.parseData";
+  }
 
   var Pattern = new RegExp(tagParse, "gim");
   var inner = [];
   var result = null;
 
   var _loop = function _loop() {
-    var tag = result[2] === undefined ? null : result[2];
-    var params = result[3] === undefined ? null : result[3];
-    var innerHtml = result[4];
+    var _getGroups = getGroups(result),
+        tag = _getGroups.tag,
+        params = _getGroups.params,
+        innerHtml = _getGroups.innerHtml;
     // push to data.Objs
-    var Math = {
-      tag: tag,
-      link: { up: [], down: [], out: [], in: [] },
-      string: {
-        start: startPoint + result.index,
-        end: startPoint + Pattern.lastIndex
-      }
-    };
-    var refPoint = Math.string.start + 1 + (typeof result[1] === 'string' ? result[1].length : 0);
+
+
+    var Match = createMatch(startPoint, result, Pattern);
+    var refPoint = Match.string.start + 1 + (typeof result[1] === 'string' ? result[1].length : 0);
     // push to data.List
-    data.List.push(Math);
-    inner.push(Math);
+    data.List.push(Match);
+    inner.push(Match);
     // create inner node's
-    Math.inner = parseData(innerHtml, refPoint, R);
-    if (_typeof(Math.inner) === 'object') eachVal(Math.inner, function (nodo) {
+    Match.inner = parseData(innerHtml, refPoint, R);
+    // link node's
+    if (_typeof(Match.inner) === 'object') map(function (nodo) {
       if (nodo) {
-        Math.link.down.push(nodo);
-        nodo.link.up.push(Math);
+        Match.link.down.push(nodo);
+        nodo.link.up.push(Match);
       }
-    });
+    }, Match.inner);
     // create params
-    Math.params = getTagParams(params);
+    Match.params = getTagParams(params);
     // push to data.ids
-    if (Math.params.id) data.map.id[Math.params.id] = Math;
+    if (Match.params.id) {
+      data.map.id[Match.params.id] = Match;
+    }
   };
 
-  while ((result = Pattern.exec(Text)) !== null) {
+  while ((result = Pattern.exec(data)) !== null) {
     _loop();
   }
-  if (inner.length) return inner;else return Text;
-}
+  if (inner.length) return inner;else return data;
+};
 
-function getTagParams(Text) {
+var getTagParams = function getTagParams(text) {
   var Pattern = new RegExp(paramParse, "gim");
   var params = {};
   var result = null;
-  while ((result = Pattern.exec(Text)) !== null) {
+  while ((result = Pattern.exec(text)) !== null) {
     var key = result[1];
     var value = result[3];
     if (key) params[key.toLowerCase()] = value ? value.toLowerCase() : undefined;
   }
   return params;
-}
+};
 
-function main(html) {
+var main = function main(html) {
   // verify input
   if (html === undefined) {
     throw 'param "html" is undefined';
@@ -93,14 +117,14 @@ function main(html) {
     crono = (+new Date() - start) / 1000;
   }
   return data;
-}
+};
 
 function getResume() {
   /*   */
 }
 
 var _require = require('pytils'),
-    eachVal = _require.eachVal;
+    map = _require.map;
 
 var tagParse = "(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)\n?";
 var paramParse = "(?:([^ ?=]+))(?:=([\"])((?:\\\\\\2|.)+?)(?:\\2))?";
