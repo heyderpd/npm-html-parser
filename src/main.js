@@ -20,11 +20,11 @@ const getGroups = (result) => ({
   innerHtml: result[4]
 })
 
-const parseData = (data, startPoint = 0, R = 0) => {
-  if (!data) {
+const parseData = (text, startPoint = 0, R = 0) => {
+  if (!text) {
     return ''
   }
-  if (typeof(data) !== 'string') {
+  if (typeof(text) !== 'string') {
     throw "Try Parse Object as a String"
   }
   if (R++ > 42) {
@@ -35,7 +35,7 @@ const parseData = (data, startPoint = 0, R = 0) => {
   const inner = []
   let result = null
 
-  while ((result = Pattern.exec(data)) !== null) {
+  while ((result = Pattern.exec(text)) !== null) {
     const { tag, params, innerHtml } = getGroups(result)
     // push to data.Objs
     const Match = createMatch(tag, startPoint, result, Pattern)
@@ -63,7 +63,7 @@ const parseData = (data, startPoint = 0, R = 0) => {
   if (inner.length)
     return inner
   else
-    return data
+    return text
 }
 
 const getTagParams = (text) => {

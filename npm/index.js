@@ -27,14 +27,14 @@ var getGroups = function getGroups(result) {
   };
 };
 
-var parseData = function parseData(data) {
+var parseData = function parseData(text) {
   var startPoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var R = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-  if (!data) {
+  if (!text) {
     return '';
   }
-  if (typeof data !== 'string') {
+  if (typeof text !== 'string') {
     throw "Try Parse Object as a String";
   }
   if (R++ > 42) {
@@ -75,10 +75,10 @@ var parseData = function parseData(data) {
     }
   };
 
-  while ((result = Pattern.exec(data)) !== null) {
+  while ((result = Pattern.exec(text)) !== null) {
     _loop();
   }
-  if (inner.length) return inner;else return data;
+  if (inner.length) return inner;else return text;
 };
 
 var getTagParams = function getTagParams(text) {
