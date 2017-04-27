@@ -16,6 +16,5 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
-    "pytils": "^0.16.2"
   }
 }

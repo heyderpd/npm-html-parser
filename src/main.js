@@ -46,13 +46,14 @@ const parseData = (text, startPoint = 0, R = 0) => {
     // create inner node's
     Match.inner = parseData(innerHtml, refPoint, R)
     // link node's
-    if (typeof(Match.inner) === 'object')
+    if (typeof(Match.inner) === 'object') {
       map(nodo => {
         if (nodo) {
           Match.link.down.push(nodo)
           nodo.link.up.push(Match)
         }
       }, Match.inner)
+    }
     // create params
     Match.params = getTagParams(params)
     // push to data.ids
@@ -103,7 +104,7 @@ function getResume() {
 
 const { map } = require('pytils')
 
-const tagParse = "(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)\n?"
+const tagParse = "[\r\n\t ]*(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)\n?"
 const paramParse = "(?:([^ ?=]+))(?:=([\"])((?:\\\\\\2|.)+?)(?:\\2))?"
 
 let data = { ready: false }

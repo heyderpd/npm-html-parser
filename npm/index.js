@@ -61,12 +61,14 @@ var parseData = function parseData(text) {
     // create inner node's
     Match.inner = parseData(innerHtml, refPoint, R);
     // link node's
-    if (_typeof(Match.inner) === 'object') map(function (nodo) {
-      if (nodo) {
-        Match.link.down.push(nodo);
-        nodo.link.up.push(Match);
-      }
-    }, Match.inner);
+    if (_typeof(Match.inner) === 'object') {
+      map(function (nodo) {
+        if (nodo) {
+          Match.link.down.push(nodo);
+          nodo.link.up.push(Match);
+        }
+      }, Match.inner);
+    }
     // create params
     Match.params = getTagParams(params);
     // push to data.ids
@@ -126,7 +128,7 @@ function getResume() {
 var _require = require('pytils'),
     map = _require.map;
 
-var tagParse = "(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)\n?";
+var tagParse = "[\r\n\t ]*(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)\n?";
 var paramParse = "(?:([^ ?=]+))(?:=([\"])((?:\\\\\\2|.)+?)(?:\\2))?";
 
 var data = { ready: false };

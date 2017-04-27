@@ -20,6 +20,6 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "pytils": "^1.19.5"
+    "pytils": "^1.29.3"
   }
 }
