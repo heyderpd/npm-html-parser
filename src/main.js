@@ -31,7 +31,7 @@ const parseData = (text, startPoint = 0, R = 0) => {
     throw "Limit recursive exceeded in f.parseData"
   }
 
-  const Pattern = new RegExp(tagParse, "gim")
+  const Pattern = new RegExp(tagParse, 'gim')
   const inner = []
   let result = null
 
@@ -68,7 +68,7 @@ const parseData = (text, startPoint = 0, R = 0) => {
 }
 
 const getTagParams = (text) => {
-  const Pattern = new RegExp(paramParse, "gim")
+  const Pattern = new RegExp(paramParse, 'gim')
   const params = {}
   let result = null
   while ((result = Pattern.exec(text)) !== null) {
@@ -104,8 +104,8 @@ function getResume() {
 
 const { map } = require('pytils')
 
-const tagParse = "[\r\n\t ]*(<\\??([^ =>]+)([^>]*?))(?:\\/>|>([\\w\\W]+?)(?:<\\/\\2>)|>)\n?"
-const paramParse = "(?:([^ ?=]+))(?:=([\"])((?:\\\\\\2|.)+?)(?:\\2))?"
+const tagParse = /[\r\n\t ]*(<\??([^ =>]+)([^>]*?))(?:\/>|>([\w\W]+?)(?:<\/\2>)|>)\n?/
+const paramParse = /(?:([^ ?=]+))(?:=([\"])((?:\\\2|.)+?)(?:\2))?/
 
 let data = { ready: false }
 let debug = false
