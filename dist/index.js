@@ -106,6 +106,8 @@ var parseData = function parseData(text) {
   return inner.length ? inner : text;
 };
 
+var data = {};
+
 var parse = exports.parse = function parse(html) {
   var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 

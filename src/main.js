@@ -82,6 +82,8 @@ const parseData = (text, startPoint = 0, R = 0) => {
     : text
 }
 
+let data = {}
+
 export const parse = (html, debug = false) => {
   // verify input
   if (html === undefined) { throw 'param "html" is undefined' }
