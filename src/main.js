@@ -82,7 +82,7 @@ const parseData = (text, startPoint = 0, R = 0) => {
     : text
 }
 
-export const parse = html => {
+export const parse = (html, debug = false) => {
   // verify input
   if (html === undefined) { throw 'param "html" is undefined' }
   // initialize

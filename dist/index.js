@@ -107,6 +107,8 @@ var parseData = function parseData(text) {
 };
 
 var parse = exports.parse = function parse(html) {
+  var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
   // verify input
   if (html === undefined) {
     throw 'param "html" is undefined';
