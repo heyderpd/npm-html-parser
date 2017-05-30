@@ -5,6 +5,11 @@
  * ISC Licensed
  */
 
+const { map, keys } = require('pytils')
+
+const tagParse = /[\r\n\t ]*(<\??([^ =>]+)([^>]*?))(?:\/>|>([\w\W]+?)(?:<\/\2>)|>)\n?/
+const paramParse = /(?:([^ ?=]+))(?:=([\"])((?:\\\2|.)+?)(?:\2))?/
+
 const createMatch = (tag, startPoint, result, Pattern) => ({
       tag: tag,
     link: { up: [], down: [], out: [], in: [] },
@@ -14,11 +19,23 @@ const createMatch = (tag, startPoint, result, Pattern) => ({
       }
   })
 
-const getGroups = (result) => ({
+const getGroups = result => ({
   tag:       result[2] !== undefined ? result[2] : null,
   params:    result[3] !== undefined ? result[3] : null,
   innerHtml: result[4]
 })
+
+const getTagParams = text => {
+  const Pattern = new RegExp(paramParse, 'gim')
+  const params = {}
+  let result = null
+  while ((result = Pattern.exec(text)) !== null) {
+    const key = result[1]
+    const value = result[3]
+    if (key) params[key.toLowerCase()] = value ? value.toLowerCase() : undefined
+  }
+  return params
+}
 
 const parseData = (text, startPoint = 0, R = 0) => {
   if (!text) {
@@ -34,7 +51,6 @@ const parseData = (text, startPoint = 0, R = 0) => {
   const Pattern = new RegExp(tagParse, 'gim')
   const inner = []
   let result = null
-
   while ((result = Pattern.exec(text)) !== null) {
     const { tag, params, innerHtml } = getGroups(result)
     // push to data.Objs
@@ -61,25 +77,12 @@ const parseData = (text, startPoint = 0, R = 0) => {
       data.map.id[Match.params.id] = Match
     }
   }
-  if (inner.length)
-    return inner
-  else
-    return text
+  return inner.length
+    ? inner
+    : text
 }
 
-const getTagParams = (text) => {
-  const Pattern = new RegExp(paramParse, 'gim')
-  const params = {}
-  let result = null
-  while ((result = Pattern.exec(text)) !== null) {
-    const key = result[1]
-    const value = result[3]
-    if (key) params[key.toLowerCase()] = value ? value.toLowerCase() : undefined
-  }
-  return params
-}
-
-const main = (html) => {
+export const parse = html => {
   // verify input
   if (html === undefined) { throw 'param "html" is undefined' }
   // initialize
@@ -90,27 +93,13 @@ const main = (html) => {
      map: { id:{} },
     List: [],
     Objs: {},
-   state: { resume:{}, ready: false }
+   state: { resume:{} }
   }
   data.Objs = parseData(html)
-  data.ready = true
   if (debug) { crono = (+new Date() -start) /1000 }
   return data
 }
 
-function getResume() {
-  /*   */
-}
-
-const { map } = require('pytils')
-
-const tagParse = /[\r\n\t ]*(<\??([^ =>]+)([^>]*?))(?:\/>|>([\w\W]+?)(?:<\/\2>)|>)\n?/
-const paramParse = /(?:([^ ?=]+))(?:=([\"])((?:\\\2|.)+?)(?:\2))?/
-
-let data = { ready: false }
-let debug = false
-
-module.exports = {
-  parse:  main,
-  resume: getResume
-}
+export const resume = from => from === 'ID'
+  ? keys(data.map.id)
+  : undefined

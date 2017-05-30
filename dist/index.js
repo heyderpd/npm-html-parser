@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /*!
@@ -7,6 +11,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * Copyright (c) 2016 heyderpd <heyderpd@gmail.com>
  * ISC Licensed
  */
+
+var _require = require('pytils'),
+    map = _require.map,
+    keys = _require.keys;
+
+var tagParse = /[\r\n\t ]*(<\??([^ =>]+)([^>]*?))(?:\/>|>([\w\W]+?)(?:<\/\2>)|>)\n?/;
+var paramParse = /(?:([^ ?=]+))(?:=([\"])((?:\\\2|.)+?)(?:\2))?/;
 
 var createMatch = function createMatch(tag, startPoint, result, Pattern) {
   return {
@@ -25,6 +36,18 @@ var getGroups = function getGroups(result) {
     params: result[3] !== undefined ? result[3] : null,
     innerHtml: result[4]
   };
+};
+
+var getTagParams = function getTagParams(text) {
+  var Pattern = new RegExp(paramParse, 'gim');
+  var params = {};
+  var result = null;
+  while ((result = Pattern.exec(text)) !== null) {
+    var key = result[1];
+    var value = result[3];
+    if (key) params[key.toLowerCase()] = value ? value.toLowerCase() : undefined;
+  }
+  return params;
 };
 
 var parseData = function parseData(text) {
@@ -46,12 +69,12 @@ var parseData = function parseData(text) {
   var result = null;
 
   var _loop = function _loop() {
-    var _getGroups = getGroups(result);
-
-    var tag = _getGroups.tag;
-    var params = _getGroups.params;
-    var innerHtml = _getGroups.innerHtml;
+    var _getGroups = getGroups(result),
+        tag = _getGroups.tag,
+        params = _getGroups.params,
+        innerHtml = _getGroups.innerHtml;
     // push to data.Objs
+
 
     var Match = createMatch(tag, startPoint, result, Pattern);
     var refPoint = Match.string.start + 1 + (typeof result[1] === 'string' ? result[1].length : 0);
@@ -80,22 +103,10 @@ var parseData = function parseData(text) {
   while ((result = Pattern.exec(text)) !== null) {
     _loop();
   }
-  if (inner.length) return inner;else return text;
+  return inner.length ? inner : text;
 };
 
-var getTagParams = function getTagParams(text) {
-  var Pattern = new RegExp(paramParse, 'gim');
-  var params = {};
-  var result = null;
-  while ((result = Pattern.exec(text)) !== null) {
-    var key = result[1];
-    var value = result[3];
-    if (key) params[key.toLowerCase()] = value ? value.toLowerCase() : undefined;
-  }
-  return params;
-};
-
-var main = function main(html) {
+var parse = exports.parse = function parse(html) {
   // verify input
   if (html === undefined) {
     throw 'param "html" is undefined';
@@ -111,32 +122,15 @@ var main = function main(html) {
     map: { id: {} },
     List: [],
     Objs: {},
-    state: { resume: {}, ready: false }
+    state: { resume: {} }
   };
   data.Objs = parseData(html);
-  data.ready = true;
   if (debug) {
     crono = (+new Date() - start) / 1000;
   }
   return data;
 };
 
-function getResume() {
-  /*   */
-}
-
-var _require = require('pytils');
-
-var map = _require.map;
-
-
-var tagParse = /[\r\n\t ]*(<\??([^ =>]+)([^>]*?))(?:\/>|>([\w\W]+?)(?:<\/\2>)|>)\n?/;
-var paramParse = /(?:([^ ?=]+))(?:=([\"])((?:\\\2|.)+?)(?:\2))?/;
-
-var data = { ready: false };
-var debug = false;
-
-module.exports = {
-  parse: main,
-  resume: getResume
+var resume = exports.resume = function resume(from) {
+  return from === 'ID' ? keys(data.map.id) : undefined;
 };
