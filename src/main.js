@@ -7,7 +7,7 @@
 
 const { map, keys } = require('pytils')
 
-const tagParse = /[\r\n\t ]*(<\??([^ =>]+)([^>]*?))(?:\/>|>([\w\W]+?)(?:<\/\2>)|>)\n?/
+const tagParse = /[\r\n\t ]*<\??([^ =>]+)([^>]*?)(?:\/>|>(|[\w\W]+?)<\/\1>|>)\n?/
 const paramParse = /(?:([^ ?=]+))(?:=([\"])((?:\\\2|.)+?)(?:\2))?/
 
 const createMatch = (tag, startPoint, result, Pattern) => ({
@@ -82,7 +82,7 @@ const parseData = (text, startPoint = 0, R = 0) => {
     : text
 }
 
-let data = {}
+let data
 
 export const parse = (html, debug = false) => {
   // verify input
