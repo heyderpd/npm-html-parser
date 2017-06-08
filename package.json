@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "name": "html-parse-regex",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "html parser module",
   "main": "dist/parse.js",
   "scripts": {

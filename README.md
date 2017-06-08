@@ -1,7 +1,13 @@
 # HTML-PARSE-REGEX
 
-## USING NEW PARSES - MANY FIXED BUGS!!
+## USING NEW PARSER - MANY FIXED BUGS!!
 ## TWICE AS FAST - All process have a avg of 5 mileseconds!!!
+
+## I will help if you have any difficulty =)
+Contact me by [github:heyderpd](https://github.com/heyderpd). I'll be glad to help you.
+
+[![NPM](https://nodei.co/npm/html-parse-regex.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/html-parse-regex/)
+[![NPM](https://nodei.co/npm-dl/html-parse-regex.png?height=3&months=2)](https://nodei.co/npm-dl/html-parse-regex/)
 
 Create tree object of html/xml raw file.
 Each node have:
