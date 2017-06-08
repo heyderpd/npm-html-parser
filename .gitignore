@@ -3,4 +3,6 @@ npm-debug*
 
 node_modules/*
 
-test/*
+test/files/*
+test/new-parser-rules.jsx
+test/old-parse.js
