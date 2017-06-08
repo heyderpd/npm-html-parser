@@ -1,9 +1,9 @@
 {
   "license": "MIT",
   "name": "html-parse-regex",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "html parser module",
-  "main": "dist/mount.js",
+  "main": "dist/parse.js",
   "scripts": {
     "transpile": "rm -rf dist/ && babel src/ --out-dir dist/",
     "test": "mocha --compilers js:babel-register --reporter spec 'test/**/*.js'",
@@ -12,7 +12,9 @@
   "keywords": [
     "parse",
     "html",
-    "xml"
+    "xml",
+    "regex",
+    "fast"
   ],
   "author": "NPM html-parse-regex <heyderpd@gmail.com> (http://heyderpd.github.io)",
   "repository": {
