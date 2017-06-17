@@ -3,6 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.validHtml = undefined;
+
+var _pytils = require('pytils');
+
+var _dejavuCall = require('dejavu-call');
 
 var _regex = require('./regex');
 
@@ -68,10 +73,26 @@ var parse = function parse(html) {
   var pushList = (0, _utils._pushList)(list);
   var tree = mountTree(pushList, addAllPureTexts(getAllTags(html), html));
   return {
+    hash: (0, _dejavuCall.getHash)(html),
     list: list,
     tree: tree,
     shortcut: (0, _utils.createShortcutAndAttributes)(list),
     error: _error.error
+  };
+};
+
+var validHtml = exports.validHtml = function validHtml(moduleName) {
+  return function (html) {
+    var erro = moduleName + ': html is a essential! and need to be a valid html object';
+    (0, _pytils.ifThrow)(!(0, _pytils.isString)(html.hash), erro);
+    (0, _pytils.ifThrow)(!(0, _pytils.isArray)(html.list), erro);
+    (0, _pytils.ifThrow)(!(0, _pytils.isObject)(html.tree), erro);
+    (0, _pytils.ifThrow)(!(0, _pytils.isObject)(html.tree), erro);
+    (0, _pytils.ifThrow)(!(0, _pytils.isObject)(html.shortcut), erro);
+    (0, _pytils.ifThrow)(!(0, _pytils.isObject)(html.error), erro);
+
+    (0, _pytils.ifThrow)(html.tree.root !== true, erro);
+    (0, _pytils.ifThrow)(!(0, _pytils.isObject)(html.tree.link), erro);
   };
 };
 

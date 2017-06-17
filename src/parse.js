@@ -1,3 +1,5 @@
+import { ifThrow, isString, isArray, isObject } from 'pytils'
+import { getHash } from 'dejavu-call'
 import { tagCatcher } from './regex'
 import { error, resetError, isLostCloseTag } from './error'
 import { _tryPushNode, oneMapToFilter, _findOpen, _linkNodes, _pushList, createShortcutAndAttributes, createPureTextNode, createRoot } from './utils'
@@ -58,11 +60,42 @@ const parse = html => {
       getAllTags(html),
       html))
   return {
+    hash: getHash(html),
     list: list,
     tree: tree,
     shortcut: createShortcutAndAttributes(list),
     error
   }
+}
+
+export const htmlValidator = moduleName => html => {
+  const erro = `${moduleName}: html is a essential! and need to be a valid html object`
+  ifThrow(
+    !isObject(html),
+    erro)
+  
+  ifThrow(
+    !isString(html.hash),
+    erro)
+  ifThrow(
+    !isArray(html.list),
+    erro)
+  ifThrow(
+    !isObject(html.tree),
+    erro)
+  ifThrow(
+    !isObject(html.shortcut),
+    erro)
+  ifThrow(
+    !isObject(html.error),
+    erro)
+  
+  ifThrow(
+    html.tree.root !== true,
+    erro)
+  ifThrow(
+    !isObject(html.tree.link),
+    erro)
 }
 
 export default parse
