@@ -93,15 +93,15 @@ const getTagParams = _params => {
 export const createShortcutAndAttributes = list => {
   const id = {}
   list.map(
-    n => {
+    (n, k) => {
+      n.uniq = k
       if (n.tag) {
         n.attrs = getTagParams(n.attrs)
         if (n.attrs.id) {
           id[n.attrs.id] = n
         }
       }
-    }
-  )
+    })
   return {
     id
   }

@@ -110,7 +110,8 @@ var getTagParams = function getTagParams(_params) {
 
 var createShortcutAndAttributes = exports.createShortcutAndAttributes = function createShortcutAndAttributes(list) {
   var id = {};
-  list.map(function (n) {
+  list.map(function (n, k) {
+    n.uniq = k;
     if (n.tag) {
       n.attrs = getTagParams(n.attrs);
       if (n.attrs.id) {
