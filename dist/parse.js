@@ -74,6 +74,7 @@ var parse = function parse(html) {
   var tree = mountTree(pushList, addAllPureTexts(getAllTags(html), html));
   return {
     hash: (0, _dejavuCall.getHash)(html),
+    file: html,
     list: list,
     tree: tree,
     shortcut: (0, _utils.createShortcutAndAttributes)(list),
@@ -87,6 +88,7 @@ var htmlValidator = exports.htmlValidator = function htmlValidator(moduleName) {
     (0, _pytils.ifThrow)(!(0, _pytils.isObject)(html), erro);
 
     (0, _pytils.ifThrow)(!(0, _pytils.isString)(html.hash), erro);
+    (0, _pytils.ifThrow)(!(0, _pytils.isString)(html.file), erro);
     (0, _pytils.ifThrow)(!(0, _pytils.isArray)(html.list), erro);
     (0, _pytils.ifThrow)(!(0, _pytils.isObject)(html.tree), erro);
     (0, _pytils.ifThrow)(!(0, _pytils.isObject)(html.shortcut), erro);

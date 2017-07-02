@@ -61,6 +61,7 @@ const parse = html => {
       html))
   return {
     hash: getHash(html),
+    file: html,
     list: list,
     tree: tree,
     shortcut: createShortcutAndAttributes(list),
@@ -76,6 +77,9 @@ export const htmlValidator = moduleName => html => {
   
   ifThrow(
     !isString(html.hash),
+    erro)
+  ifThrow(
+    !isString(html.file),
     erro)
   ifThrow(
     !isArray(html.list),
