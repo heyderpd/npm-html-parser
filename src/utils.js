@@ -1,3 +1,4 @@
+import { path } from 'pytils'
 import { paramCatcher } from './regex'
 import { isForcedCloseTag } from './error'
 
@@ -97,6 +98,11 @@ export const createShortcutAndAttributes = list => {
       n.uniq = k
       if (n.tag) {
         n.attrs = getTagParams(n.attrs)
+        const Class = path(['class'], n.attrs)
+        if (Class) {
+          n.class = Class.split(' ')
+        }
+        delete n.attrs['class']
         if (n.attrs.id) {
           id[n.attrs.id] = n
         }

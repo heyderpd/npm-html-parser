@@ -7,6 +7,8 @@ exports.createRoot = exports.createPureTextNode = exports.createShortcutAndAttri
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var _pytils = require('pytils');
+
 var _regex = require('./regex');
 
 var _error = require('./error');
@@ -114,6 +116,11 @@ var createShortcutAndAttributes = exports.createShortcutAndAttributes = function
     n.uniq = k;
     if (n.tag) {
       n.attrs = getTagParams(n.attrs);
+      var Class = (0, _pytils.path)(['class'], n.attrs);
+      if (Class) {
+        n.class = Class.split(' ');
+      }
+      delete n.attrs['class'];
       if (n.attrs.id) {
         id[n.attrs.id] = n;
       }
