@@ -117,9 +117,7 @@ var createShortcutAndAttributes = exports.createShortcutAndAttributes = function
     if (n.tag) {
       n.attrs = getTagParams(n.attrs);
       var Class = (0, _pytils.path)(['class'], n.attrs);
-      if (Class) {
-        n.class = Class.split(' ');
-      }
+      n.class = (0, _pytils.isString)(Class) ? Class.split(' ') : [];
       delete n.attrs['class'];
       if (n.attrs.id) {
         id[n.attrs.id] = n;
