@@ -30,9 +30,11 @@ var addAllPureTexts = function addAllPureTexts(Nodes, html) {
       before = 0,
       text = '';
   Nodes.concat({ start: html.length }).map(function (node) {
-    var end = node.start - before;
-    text = html.substr(before, end);
-    text ? fullNodes.push((0, _utils.createPureTextNode)(text, before, end)) : null;
+    var len = node.start - before;
+    text = html.substr(before, len);
+    if (text) {
+      fullNodes.push((0, _utils.createPureTextNode)(text, before, node.start));
+    }
     before = node.end;
     fullNodes.push(node);
   });

@@ -19,9 +19,12 @@ const addAllPureTexts = (Nodes, html) => {
   Nodes
     .concat({ start: html.length })
     .map(node => {
-      const end = node.start -before
-      text = html.substr(before, end)
-      text ? fullNodes.push(createPureTextNode(text, before, end)) : null
+      const len = node.start -before
+      text = html.substr(before, len)
+      if (text) {
+        fullNodes.push(
+          createPureTextNode(text, before, node.start))
+      }
       before = node.end
       fullNodes.push(node)
     })
